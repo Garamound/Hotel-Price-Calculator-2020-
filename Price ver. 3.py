@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 
+# CALCULATIONS FOR EACH ROOM BASED ON ENTERED VALUES, BOOKING.COM COPY BUTTONS:
+
 def calculate(*args):
     try:
         value = float(mainprice.get())
@@ -26,13 +28,16 @@ def calculate(*args):
 
         tbal.set(round(3 * value) + 30)
         tbalb.set(round(((value + 30 / 3) / (1 - (off / 100))) * 3))
+
         tb2d1.set(round(2.7 * value) + 30)
         tb1d2.set(round(2.4 * value) + 30)
 
         stud.set((round(4 * value) + 50))
         tri.set(round(3 * value))
         trib.set(round(((value) / (1 - (off / 100))) * 3))
+
         studb.set(round(((value + 12.5) / (1 - (off / 100))) * 4))
+
         stud22.set((round(3.4 * value) + 50))
         stud31.set((round(3.7 * value) + 50))
         stud13.set((round(3.1 * value) + 50))
@@ -48,18 +53,24 @@ def calculate(*args):
         apa42d2.set(round(3.4 * value) + 100)
         apa41d3.set(round(3.1 * value) + 100)
 
+        show_buttons()
 
     except ValueError:
         pass
 
+
+# SETTING UP MAIN WINDOW
+
 root = Tk()
 root.title("Channel Price Calculator")
-root.geometry('550x844')
+root.geometry('528x846')
 
 mainframe = ttk.Frame(root, padding="18 18 26 26")
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
+
+# SETTING UP VARIABLES (ALL TYPES OF ROOMS)
 
 mainprice = StringVar()
 booking = StringVar()
@@ -71,7 +82,7 @@ doub = StringVar()
 doub2 = StringVar()
 doubb = StringVar()
 
-dbal = StringVar() # Added balcony
+dbal = StringVar()
 dbal2 = StringVar()
 dbalb = StringVar()
 
@@ -105,6 +116,7 @@ apa43d1 = StringVar()
 apa42d2 = StringVar()
 apa41d3 = StringVar()
 
+# DISPLAY OF CALCULATED VALUES
 
 feet_entry = ttk.Entry(mainframe, width=7, textvariable=mainprice)
 feet_entry.grid(column=1, row=1, sticky=(W, E))
@@ -153,8 +165,7 @@ ttk.Label(mainframe, textvariable=apa43d1).grid(column=1, row=25, sticky=W)
 ttk.Label(mainframe, textvariable=apa42d2).grid(column=1, row=26, sticky=W)
 ttk.Label(mainframe, textvariable=apa41d3).grid(column=1, row=27, sticky=W)
 
-
-ttk.Button(mainframe, text="Przelicz", command=calculate).grid(column=0, row=3, sticky=W)
+# LABELS
 
 ttk.Label(mainframe, text="Cena podstawowa: ", font=('Helvetica', 12, 'bold')).grid(column=0, row=1, sticky=W)
 ttk.Label(mainframe, text="Rabat na Booking.com:", font=('Helvetica', 12, 'bold')).grid(column=0, row=2, sticky=W)
@@ -193,6 +204,29 @@ ttk.Label(mainframe, text="4 os. Apartament, 3 os dorosłe, 1 dziecko: ").grid(c
 ttk.Label(mainframe, text="4 os. Apartament, 2 os dorosłe, 2 dzieci: ").grid(column=0, row=26, sticky=W)
 ttk.Label(mainframe, text="4 os. Apartament, 1 os dorosła, 1 dzieci: ").grid(column=0, row=27, sticky=W)
 
+# BUTTON
+
+ttk.Button(mainframe, text="Przelicz", command=calculate).grid(column=0, row=3, sticky=W)
+
+# COPY FUNCTION
+
+def copy(value):
+    root.clipboard_clear()
+    root.clipboard_append(value.get())
+    root.update() # now it stays on the clipboard after the window is closed
+
+
+# COPY BUTTONS
+def show_buttons():
+    Button(mainframe, text="⎘", borderwidth=0, font=('times bold', 12), command=lambda : copy(oneb)).grid(column=2, row=5, sticky=E)
+    Button(mainframe, text="⎘", borderwidth=0, font=('times bold', 12), command=lambda : copy(doubb)).grid(column=2, row=6, sticky=E)
+    Button(mainframe, text="⎘", borderwidth=0, font=('times bold', 12), command=lambda : copy(dbalb)).grid(column=2, row=8, sticky=E)
+    Button(mainframe, text="⎘", borderwidth=0, font=('times bold', 12), command=lambda : copy(luxb)).grid(column=2, row=10, sticky=E)
+    Button(mainframe, text="⎘", borderwidth=0, font=('times bold', 12), command=lambda : copy(trib)).grid(column=2, row=12, sticky=E)
+    Button(mainframe, text="⎘", borderwidth=0, font=('times bold', 12), command=lambda : copy(tbalb)).grid(column=2, row=15, sticky=E)
+    Button(mainframe, text="⎘", borderwidth=0, font=('times bold', 12), command=lambda : copy(studb)).grid(column=2, row=18, sticky=E)
+    Button(mainframe, text="⎘", borderwidth=0, font=('times bold', 12), command=lambda : copy(apab)).grid(column=2, row=22, sticky=E)
+    Button(mainframe, text="⎘", borderwidth=0, font=('times bold', 12), command=lambda : copy(apa4b)).grid(column=2, row=24, sticky=E)
 
 
 for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
